@@ -4,7 +4,7 @@ h1{font-size:1.5rem;margin:.2em 0}h2{margin-top:1.6em;font-size:1.25rem}.sub,.me
 button{font:inherit;padding:10px 14px;border-radius:8px;border:1px solid #bbb;background:transparent;color:inherit;margin:4px 4px 4px 0;cursor:pointer}
 button.primary{background:#2563eb;color:#fff;border-color:#2563eb}.seg{display:flex;flex-wrap:wrap}.seg .on{background:#2563eb;color:#fff;border-color:#2563eb}
 .task{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.task input{width:20px;height:20px;flex:none;margin-top:2px}
-.card{border:1px solid #ccc;border-radius:12px;padding:16px;margin:12px 0}.h3{font-weight:600;font-size:1.1rem}.q{font-weight:600}
+.card{border:1px solid #ccc;border-radius:12px;padding:16px;margin:12px 0}.h3{font-weight:600;font-size:1.1rem}.q{font-weight:600;white-space:pre-line}
 .opt{display:block;width:100%;text-align:left}.opt.right{border-color:#16a34a;background:rgba(22,163,74,.15)}.opt.wrong{border-color:#dc2626;background:rgba(220,38,38,.15)}
 .okt{color:#16a34a}.badt{color:#dc2626}.lbl{display:block;margin-top:12px;font-size:.9rem}
 input[type=text],textarea{width:100%;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid #bbb;font:inherit;background:transparent;color:inherit;margin-top:4px}
@@ -143,13 +143,13 @@ const CARDS = [
 ["N", "Maximale Zuladung der F-GNNF inklusive Kraftstoff?", "225 kg", ["160 kg", "260 kg", "300 kg"], "Beladungsplan: 780 kg max. Abflugmasse − 555 kg Leermasse = 225 kg.", "Beladungsplan NF"],
 ["N", "Hebelarme Pilot/Fluggast, Kraftstoff, Gepäck?", "0,45 m / 1,10 m / 1,20 m", ["0,45 m / 1,20 m / 1,10 m", "0,266 m / 1,10 m / 1,20 m", "0,50 m / 0,90 m / 1,50 m"], "Beladungsplan F-GNNF.", "Beladungsplan NF"],
 ["N", "Volle ausfliegbare Tanks (118 l) wiegen bei 0,72 kg/l?", "85 kg", ["118 kg", "70 kg", "95 kg", "164 kg"], "Beladungsplan F-GNNF: AVGAS 0,72 kg/l.", "Beladungsplan NF"],
-["N", "Zwei Personen à 80 kg, kein Gepäck: wie viel Kraftstoff maximal?", "65 kg, etwa 90 l", ["85 kg, volle 118 l", "45 kg, etwa 62 l", "75 kg, etwa 104 l"], "780 − 555 − 160 = 65 kg; 65 / 0,72 ≈ 90 l. Volle Tanks wären 20 kg zu schwer.", "Beladungsplan NF"],
-["N", "Schwerpunkt im Beispiel 2 × 80 kg, 65 kg Kraftstoff?", "0,373 m, innerhalb 0,22–0,46 m", ["0,266 m, innerhalb 0,22–0,46 m", "0,48 m, außerhalb 0,22–0,46 m", "0,45 m, innerhalb 0,22–0,46 m"], "(555 × 0,266 + 160 × 0,45 + 65 × 1,10) / 780 ≈ 0,373 m.", "Beladungsplan NF"],
+["N", "Zwei Personen à 80 kg, kein Gepäck: wie viel Kraftstoff maximal?\n\nDaten Beladungsplan F-GNNF: Leermasse 555 kg, Hebelarm 0,266 m · Pilot/Fluggast 0,45 m · Kraftstoff 1,10 m (0,72 kg/l) · Gepäck 1,20 m · max. Abflugmasse 780 kg", "65 kg, etwa 90 l", ["85 kg, volle 118 l", "45 kg, etwa 62 l", "75 kg, etwa 104 l"], "780 − 555 − 160 = 65 kg; 65 / 0,72 ≈ 90 l. Volle Tanks wären 20 kg zu schwer.", "Beladungsplan NF"],
+["N", "Schwerpunkt bei 2 × 80 kg und 65 kg Kraftstoff, kein Gepäck? Zulässig 0,22–0,46 m.\n\nDaten Beladungsplan F-GNNF: Leermasse 555 kg, Hebelarm 0,266 m · Pilot/Fluggast 0,45 m · Kraftstoff 1,10 m (0,72 kg/l) · Gepäck 1,20 m · max. Abflugmasse 780 kg", "0,373 m, innerhalb 0,22–0,46 m", ["0,266 m, innerhalb 0,22–0,46 m", "0,48 m, außerhalb 0,22–0,46 m", "0,45 m, innerhalb 0,22–0,46 m"], "(555 × 0,266 + 160 × 0,45 + 65 × 1,10) / 780 ≈ 0,373 m.", "Beladungsplan NF"],
 ["N", "Prüfer: 'Wie viel Zuladung noch?' Faustregel bei voller Masse?", "Jedes kg mehr Zuladung kostet etwa 1,4 l Kraftstoff", ["Jedes kg mehr Zuladung kostet etwa 0,72 l Kraftstoff", "Jedes kg mehr Zuladung kostet etwa 1 l Kraftstoff", "Jedes kg mehr Zuladung kostet etwa 2 l Kraftstoff"], "1 kg / 0,72 kg/l ≈ 1,4 l (Beladungsplan NF). Zuladung immer im Rahmen der 225 kg prüfen.", "Beladungsplan NF / Forum"],
 ["N", "Warum ist die max. Rollmasse (785 kg) höher als die max. Abflugmasse (780 kg)?", "5 kg Kraftstoff werden beim Anlassen und Rollen verbraucht", ["5 kg Toleranz für Messfehler der Waage beim Wiegen", "5 kg Zusatzgepäck, das nur am Boden erlaubt ist", "5 kg Öl, die beim Warmlaufen am Boden hinzugerechnet werden"], "Beladungsplan F-GNNF: Anlassen/Rollen −5 kg.", "Beladungsplan NF"],
 ["N", "Avionik in der F-GNNF einschalten?", "Kein Avionik-Hauptschalter: jedes Gerät einzeln schalten", ["Ein Avionik-Hauptschalter schaltet alle Geräte gemeinsam", "Avionik geht automatisch mit dem Batterieschalter an", "Avionik wird gemeinsam mit dem Alternator-Schalter geschaltet"], "Laut Alex (eigene Erfahrung mit der NF), nicht aus AFM oder Checkliste.", "Alex / NF"],
-["N", "Kompensierbericht F-GNNF: missweisender Kurs (mw) 090°, welchen Kompasskurs steuern?", "091°", ["089°", "090°", "092°"], "Kompensierbericht 11.08.2022: Deviation bei 090° = −1°, Steuertabelle 091.", "Deviation NF"],
-["N", "Kompensierbericht: mw 000° (Nord) steuern mit Kompasskurs?", "358°", ["002°", "000°", "356°"], "Deviation bei 000° = +2°, Kompasskurs 358 (Steuertabelle am Kompass).", "Deviation NF"],
+["N", "Kompensierbericht F-GNNF: missweisender Kurs (mw) 090°, welchen Kompasskurs steuern?\n\nSteuertabelle F-GNNF (Kompensierbericht LSCO 11.08.2022), mw → Kompasskurs:\n000→358 · 030→030 · 060→059 · 090→091\n120→122 · 150→152 · 180→181 · 210→210\n240→240 · 270→269 · 300→299 · 330→328", "091°", ["089°", "090°", "092°"], "Kompensierbericht 11.08.2022: Deviation bei 090° = −1°, Steuertabelle 091.", "Deviation NF"],
+["N", "Kompensierbericht F-GNNF: wie groß ist die Deviation bei mw 120°, und in welche Richtung wird korrigiert?\n\nSteuertabelle F-GNNF (Kompensierbericht LSCO 11.08.2022), mw → Kompasskurs:\n000→358 · 030→030 · 060→059 · 090→091\n120→122 · 150→152 · 180→181 · 210→210\n240→240 · 270→269 · 300→299 · 330→328", "Deviation −2°, Kompasskurs 122° steuern", ["Deviation +2°, Kompasskurs 118° steuern", "Deviation −2°, Kompasskurs 118° steuern", "Deviation +1°, Kompasskurs 121° steuern"], "Kompensierbericht 11.08.2022: bei 120° Deviation −2°, Kompasskurs 122. Kompasskurs = mw − Deviation.", "Deviation NF"],
 ["N", "Unter welchen Bedingungen wurde der Kompass der NF kompensiert? (VHF = UKW-Funk)", "Bei laufendem Motor, mit VHF 1 und Navigationslicht an", ["Bei stehendem Motor, alle Geräte und Lichter aus", "Im Flug bei Reisedrehzahl, mit GPS, Funk und Landelicht an", "Nur mit Batterie, ohne Funk, mit Navigationslicht an"], "Kompensierbericht LSCO 11.08.2022. Die Steuertabelle hängt am Kompass.", "Deviation NF"],
 ["N", "Welche Landearten verlangt die Schul-Einweisung HR20?", "Normallandung, Landung ohne Klappen, Landung mit Klappe 1. Stellung", ["Normallandung, Kurzlandung auf Gras, Seitenwindlandung mit Klappe 2. Stellung", "Normallandung, Landung mit Rückenwind, Landung ohne Motor", "Kurzlandung, Landung mit Klappe 2. Stellung, Ziellandung"], "Einweisung HR20 (Flugschule Hans Grade): alle 3 Landearten sollen gut beherrscht werden, dazu Ziellandeübung und Durchstarten.", "Einweisung HR20"],
 ["N", "Ziellandeübung laut Einweisung HR20 aus welcher Höhe? (AGL = über Grund)", "2000 ft AGL bzw. 1000 ft AGL", ["500 ft AGL bzw. 300 ft AGL", "3000 ft AGL bzw. 2000 ft AGL", "1500 ft AGL bzw. 800 ft AGL"], "Einweisung HR20: mind. 2× Ziellandeübung aus 2000/1000 ft AGL. Prüfer im Forum: oft aus 2000 ft mit Gas raus.", "Einweisung HR20 / Forum"],
@@ -181,6 +181,9 @@ const PROPS = [
         ];
 const CONTRA = 'AFM (Aircraft Flight Manual, Flughandbuch) und Schul-Checkliste HR20 sagen hier Unterschiedliches. Kraftstoff: AFM nur AVGAS 100LL, Checkliste auch UL91. Motorbrand: 86 kt laut AFM, 85 kt laut Checkliste. Sicherheitslandung: AFM 73 kt Überflug und 68 kt Anflug, Checkliste 80 kt und 70–75 kt. Propeller bei F-GNNF (Sensenich oder Hoffmann) noch klären. In der Schule gilt die Checkliste, im Zweifel den Fluglehrer fragen.';
 
+// Duplikate: standardmäßig ausgeblendet (Index bleibt erhalten)
+const DUP = {87: "Doppelt zu Karte 17 (Motorausfall nach dem Start)"};
+
 const REQ=3;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -193,7 +196,7 @@ S.storageOk=save('cr_test',1);
 function persist(){const ok=[save('cr_st',S.st),save('cr_cnt',S.cnt),save('cr_struck',S.struck),save('cr_notes',S.notes),save('cr_done',S.done)].every(Boolean);
  S.storageOk=ok;S.lastSave=ok?new Date().toLocaleTimeString('de-DE'):''}
 const grp={robin:'R',allg:'A',nf:'N'};
-function pool(){return CARDS.map((_,i)=>i).filter(i=>!S.struck[i]&&(S.filter==='alle'||CARDS[i][0]===grp[S.filter]))}
+function pool(){return CARDS.map((_,i)=>i).filter(i=>!S.struck[i]&&!DUP[i]&&(S.filter==='alle'||CARDS[i][0]===grp[S.filter]))}
 const sc=i=>(S.st[i]&&S.st[i].s)||0;
 const cn=i=>S.cnt[i]||{n:0,r:0,w:0};
 function startRound(){S.queue=shuffle(pool().filter(i=>sc(i)<REQ));S.pos=0;resetCard()}
@@ -205,7 +208,7 @@ function pick(k){const c=cur();if(S.picked!==null||c<0)return;const o=S.options[
 function next(){S.pos++;resetCard();render()}
 function strike(i){S.struck[i]=true;S.queue=S.queue.filter((x,k)=>k<S.pos||x!==i);persist();resetCard();render()}
 function unstrike(i){delete S.struck[i];persist();render()}
-function stat(ids){const act=ids.filter(i=>!S.struck[i]);let r=0,w=0;ids.forEach(i=>{r+=cn(i).r;w+=cn(i).w});
+function stat(ids){ids=ids.filter(i=>!DUP[i]);const act=ids.filter(i=>!S.struck[i]);let r=0,w=0;ids.forEach(i=>{r+=cn(i).r;w+=cn(i).w});
  return{act:act.length,str:ids.length-act.length,seen:ids.filter(i=>cn(i).n>0).length,n:r+w,r,w,pct:r+w?Math.round(r/(r+w)*100):0,lern:act.filter(i=>sc(i)>=REQ).length}}
 function render(){
  const d=DAYS.find(x=>x.key===S.day);const dd=d.tasks.filter(t=>S.done[t.id]).length;
