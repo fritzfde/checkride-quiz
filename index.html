@@ -1,0 +1,268 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Checkride Mo 26.10. – Plan & Quiz</title><meta name="robots" content="noindex"><style>body{font-family:-apple-system,system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;line-height:1.45;color:#111;background:#fff}
+@media(prefers-color-scheme:dark){body{background:#111;color:#eee}.card,table td,table th,.opt,button,input,textarea{border-color:#444!important}}
+h1{font-size:1.5rem;margin:.2em 0}h2{margin-top:1.6em;font-size:1.25rem}.sub,.meta{opacity:.7}.meta{font-size:.85rem}
+button{font:inherit;padding:10px 14px;border-radius:8px;border:1px solid #bbb;background:transparent;color:inherit;margin:4px 4px 4px 0;cursor:pointer}
+button.primary{background:#2563eb;color:#fff;border-color:#2563eb}.seg{display:flex;flex-wrap:wrap}.seg .on{background:#2563eb;color:#fff;border-color:#2563eb}
+.task{display:flex;gap:8px;align-items:flex-start;margin:8px 0}.task input{width:20px;height:20px;flex:none;margin-top:2px}
+.card{border:1px solid #ccc;border-radius:12px;padding:16px;margin:12px 0}.h3{font-weight:600;font-size:1.1rem}.q{font-weight:600}
+.opt{display:block;width:100%;text-align:left}.opt.right{border-color:#16a34a;background:rgba(22,163,74,.15)}.opt.wrong{border-color:#dc2626;background:rgba(220,38,38,.15)}
+.okt{color:#16a34a}.badt{color:#dc2626}.lbl{display:block;margin-top:12px;font-size:.9rem}
+input[type=text],textarea{width:100%;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid #bbb;font:inherit;background:transparent;color:inherit;margin-top:4px}
+textarea{font-family:ui-monospace,monospace;font-size:.8rem}.tw{overflow-x:auto}table{border-collapse:collapse;font-size:.9rem}td,th{border-bottom:1px solid #ddd;padding:6px 8px;text-align:left}
+.status{padding:10px 12px;border-radius:8px;margin:8px 0}.status.ok{background:rgba(22,163,74,.12)}.status.bad{background:rgba(220,38,38,.15)}
+.srow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.srow span{flex:1 1 200px}</style></head>
+<body><h1>Checkride Mo 26.10.</h1><p class="sub">Tagesplan zum Abhaken und Quiz bis alles sitzt. Prüfung: 13:00 Treffen Flugschule, 14–17 Uhr Flug mit F-GNNF, nur analog navigieren.</p>
+<div id="app"></div><script>const DAYS = [
+  { key: "fr", label: "Fr 23.10.", note: "Arbeit 9–17: kleine Häppchen in Wartezeiten (GitHub, Kollegen). Abends Gym früher, wenig Gaming.", tasks: [
+    { id: "fr1", t: "10 min · Quiz: Filter Robin, eine Runde" },
+    { id: "fr2", t: "10 min · Quiz: Filter Robin, zweite Runde in einer anderen Pause" },
+    { id: "fr3", t: "15 min · Quiz: Filter Allgemein, eine Runde" },
+    { id: "fr4", t: "15 min · FCL.235 (EASA-Vorschrift zur praktischen Prüfung) Abschnitte 1–5 lesen, Prüfbericht-Formular" },
+    { id: "fr5", t: "5 min · Toleranzen auswendig: Höhe ±150 ft, Kurs ±10°, Fahrt +15/−5 kt (Knoten)" },
+    { id: "fr6", t: "15 min · VFK (Vorflugkontrolle) mit Checkliste laut durchsprechen, als wäre der Prüfer da" },
+    { id: "fr7", t: "20 min · X-Plane: Motorausfall mit Feldwahl, Motorbrand, Sicherheitslandung, laut mitsprechen" },
+    { id: "fr8", t: "15 min · X-Plane: Langsamflug, Steilkurve 45° mit Höhe halten" },
+    { id: "fr9", t: "Gym früher als sonst, vor Mitternacht schlafen" },
+  ]},
+  { key: "sa", label: "Sa 24.10.", note: "Routentag. Vormittags Papier, nachmittags X-Plane. Morgens eine Quiz-Runde.", tasks: [
+    { id: "sa0", t: "10 min · Quiz: Filter Alle, eine Runde" },
+    { id: "sa1", t: "20 min · Route 1 auf Papier: Kurse, Distanzen, Zeiten" },
+    { id: "sa2", t: "15 min · Route 1: Meldepunkte, Frequenzen, VOR-Radiale" },
+    { id: "sa3", t: "20 min · Route 3 auf Papier: Kurse, Distanzen, Zeiten" },
+    { id: "sa4", t: "15 min · Route 3: Meldepunkte, Frequenzen, VOR-Radiale" },
+    { id: "sa5", t: "15 min · Südvariante grob: Holzdorf ETSH CTR (Kontrollzone), Aktivzeiten, FIS (Fluginformationsdienst), ED-R (Flugbeschränkungsgebiete)" },
+    { id: "sa6", t: "10 min · Diversion (Umleitung) von Hand Nr. 1: Kurs, Distanz, Zeit, Sprit, Stoppuhr" },
+    { id: "sa7", t: "10 min · Diversion von Hand Nr. 2" },
+    { id: "sa8", t: "10 min · Diversion von Hand Nr. 3" },
+    { id: "sa9", t: "5 min · X-Plane: prüfen, ob VOR KLF 115.15 und BBI 114.10 in der Datenbank sind" },
+    { id: "sa10", t: "20 min · X-Plane Route 1 ohne GPS-Karte: Karte, Uhr, Kompass, VOR" },
+    { id: "sa11", t: "20 min · X-Plane Route 3 ohne GPS-Karte, eine Diversion ansagen" },
+    { id: "sa12", t: "15 min · Funk laut üben: Berlin Tower (CTR, Low Approach) und FIS" },
+    { id: "sa13", t: "Gym früher, gegen 23 Uhr schlafen" },
+  ]},
+  { key: "so", label: "So 25.10.", note: "Nacht auf Sonntag: Uhr 1 h zurück (Winterzeit, ab jetzt UTC+1).", tasks: [
+    { id: "so1", t: "15 min · Quiz: Filter Alle, dritte Runde, damit alles sitzt" },
+    { id: "so2", t: "15 min · Schwächste Route oder Übung nochmal kurz (Papier oder X-Plane)" },
+    { id: "so3", t: "ab 17 Uhr · Wetter für Montag: GAFOR (Gebietsvorhersage), TAF (Flugplatzvorhersage), METAR (Flugplatzwetter), Prognosekarten" },
+    { id: "so4", t: "10 min · Entscheidung notieren: fliegbar ja/nein und warum" },
+    { id: "so5", t: "18–19 Uhr · Herrn Schlums anrufen: Wettereinschätzung, nach der Route fragen" },
+    { id: "so6", t: "20 min · Flugdurchführungsplan mit vorhergesagtem Wind rechnen" },
+    { id: "so7", t: "Tasche: Lizenz/Ausbildungsnachweis + Ausweis" },
+    { id: "so8", t: "Tasche: Medical" },
+    { id: "so9", t: "Tasche: Flugbuch" },
+    { id: "so10", t: "Tasche: ICAO-Karte" },
+    { id: "so11", t: "Tasche: Plotter" },
+    { id: "so12", t: "Tasche: Stoppuhr" },
+    { id: "so13", t: "Tasche: Stifte" },
+    { id: "so14", t: "Tasche: Kniebrett" },
+    { id: "so15", t: "Tasche: Headset" },
+    { id: "so16", t: "Kein Gym spät, kein Gaming, früh schlafen" },
+  ]},
+  { key: "mo", label: "Mo 26.10.", note: "13:00 Schule, 14–17 Uhr Flug mit F-GNNF.", tasks: [
+    { id: "mo1", t: "NOTAMs (Notices to Airmen, aktuelle Betriebshinweise) prüfen: Start, Route, ED-R, Holzdorf" },
+    { id: "mo2", t: "Aktuelles Wetter: METAR, TAF, GAFOR" },
+    { id: "mo3", t: "Masse & Schwerpunkt für F-GNNF rechnen" },
+    { id: "mo4", t: "Flugdurchführungsplan mit aktuellem Wind aktualisieren" },
+    { id: "mo5", t: "Etwas essen, IMSAFE-Selbstcheck" },
+    { id: "mo6", t: "13:00 entspannt in der Schule" },
+  ]},
+];
+
+
+const CARDS = [
+["R","Welcher Motor ist in der HR200/120B eingebaut?","Lycoming O-235-L2A, 4 Zylinder, 118 PS bei 2800 RPM (Umdrehungen pro Minute)",["Lycoming O-320, 150 PS bei 2700 RPM","Continental O-200, 100 PS bei 2750 RPM","Rotax 912, 100 PS bei 5800 RPM"],"Laut AFM (Aircraft Flight Manual, Flughandbuch) 1.05. Propeller laut AFM Hoffmann; ob F-GNNF einen Sensenich hat, noch klären.","HR200 #1"],
+["R","Statische Mindestdrehzahl bei Vollgas vor dem Start?","2250 RPM (Umdrehungen pro Minute)",["2000 RPM","1800 RPM","2500 RPM","2800 RPM"],"AFM (Flughandbuch) 1.05 und Schul-Checkliste S. 9. Mit Sensenich-Propeller laut Supplement 6: 2300 RPM.","HR200 #2"],
+["R","Vne (never exceed speed, darf nie überschritten werden), Vno (max. Reisegeschwindigkeit, nur bis hier in Turbulenz), Va (Manövergeschwindigkeit), Vfe (max. Geschwindigkeit mit Klappen)?","Vne 160, Vno 131, Va 131, Vfe 96 kt (Knoten)",["Vne 150, Vno 120, Va 110, Vfe 85 kt","Vne 160, Vno 131, Va 108, Vfe 85 kt","Vne 170, Vno 140, Va 131, Vfe 100 kt"],"AFM (Flughandbuch) 2.02, angezeigte Fahrt (IAS).","HR200 #3"],
+["R","Vs0 (Überziehgeschwindigkeit in Landekonfiguration) und Vs1 (Überziehgeschwindigkeit clean, Klappen ein)?","Vs0 52 kt, Vs1 59 kt (Knoten)",["Vs0 45 kt, Vs1 52 kt","Vs0 59 kt, Vs1 65 kt","Vs0 52 kt, Vs1 73 kt"],"Weißer Bogen beginnt bei 52, grüner bei 59 kt (AFM 2.02).","HR200 #4"],
+["R","Überziehgeschwindigkeit im Leerlauf, Klappen ein, bei 60° Querlage (laut Checkliste)?","84 kt (Knoten)",["60 kt","70 kt","96 kt","73 kt"],"Checkliste S. 3: 60 / 64 / 84 kt bei 0° / 30° / 60°, also etwa +40 % bei 60°.","HR200 #5"],
+["R","Vx (bester Steigwinkel) und Vy (beste Steigrate) mit Klappen 10°?","Vx 62 kt, Vy 73 kt (Knoten)",["Vx 65 kt, Vy 76 kt","Vx 55 kt, Vy 65 kt","Vx 73 kt, Vy 85 kt"],"Checkliste S. 3/14. Ohne Klappen: Vx 65, Vy 76 kt.","HR200 #6"],
+["R","Beste Gleitgeschwindigkeit der HR200?","73 kt (Knoten), Klappen ein",["65 kt, Klappen 10°","80 kt, Klappen ein","62 kt, Klappen ein","85 kt, Klappen ein"],"Checkliste S. 3, AFM (Flughandbuch) 3.03. Gleitzahl etwa 8,2.","HR200 #7"],
+["R","Maximale Seitenwindkomponente laut Checkliste?","18 kt (Knoten)",["12 kt","15 kt","22 kt","25 kt"],"Schul-Checkliste S. 3 und S. 10.","HR200 #8"],
+["R","Klappenstellungen für Start und Landung?","Start 10°, Landung 20°",["Start 0°, Landung 30°","Start 15°, Landung 40°","Start 10°, Landung 30°"],"AFM (Flughandbuch) 3.04, Checkliste S. 9/12. Max. 96 kt mit Klappen.","HR200 #9"],
+["R","MTOM (Maximum Take-Off Mass, Höchstabflugmasse) und max. Gepäck?","780 kg, Gepäck max. 35 kg",["900 kg, Gepäck max. 50 kg","750 kg, Gepäck max. 20 kg","800 kg, Gepäck max. 35 kg"],"AFM (Flughandbuch) 2.03/2.04, Utility-Kategorie, 2 Insassen.","HR200 #10"],
+["R","Welches Manöver ist bei der HR200 verboten?","Trudeln",["Kurven über 60° Querlage","Lazy Eight","Chandelle"],"AFM 2.05/2.06: Kurven > 60°, Lazy Eight, Chandelle zugelassen; Trudeln verboten.","HR200 #11"],
+["R","Kraftstoff: Menge gesamt und ausfliegbar?","120 l gesamt, 118 l ausfliegbar",["100 l gesamt, 95 l ausfliegbar","120 l gesamt, 110 l ausfliegbar","140 l gesamt, 136 l ausfliegbar"],"AFM 2.04. Widerspruch bei der Sorte: AFM nur AVGAS 100LL, Schul-Checkliste 100LL und UL91.","HR200 #12"],
+["R","Verbrauch bei 75 % Leistung?","ca. 25 l/h",["ca. 18 l/h","ca. 32 l/h","ca. 40 l/h"],"AFM 7.32 (Sensenich-Tabelle, Richtwert): 4 h 40 min mit 118 l ohne Reserve.","HR200 #13"],
+["R","Öl: Mindest- und Höchstmenge laut Checkliste?","min. 4, max. 6 US-Quarts",["min. 2, max. 4 US-Quarts","min. 5, max. 8 US-Quarts","min. 4, max. 8 US-Quarts"],"Checkliste S. 3/6. Öltemperatur max. 118 °C.","HR200 #14"],
+["R","Standlauf bei 1800 RPM: Grenzwerte Magnetprobe?","Abfall max. 175 RPM, Differenz links/rechts max. 50 RPM",["Abfall max. 125 RPM, Differenz max. 50 RPM","Abfall max. 200 RPM, Differenz max. 100 RPM","Abfall max. 175 RPM, Differenz max. 75 RPM"],"Checkliste S. 8–9. Vergaservorwärmung: Abfall 100–200 RPM.","HR200 #15"],
+["R","Leistung für die Steilkurve 45° bei 90–100 kt laut Checkliste?","ca. 2600 RPM",["ca. 2200 RPM","ca. 2000 RPM","ca. 2800 RPM"],"Checkliste S. 13. Langsamflug 60 kt Landeklappen ca. 2200 RPM.","HR200 #16"],
+["R","Schul-Platzrunde: wann Klappen nach dem Start einfahren?","Bei 300 ft AGL (über Grund), dann 76 kt",["Sofort nach dem Abheben","Bei 500 ft AGL, dann 73 kt","Bei 1000 ft AGL im Gegenanflug"],"Checkliste S. 14: Steigflug 73 kt mit 10°, ab 300 ft AGL Klappen ein, 1. Kurve ab 500 ft AGL.","HR200 #17"],
+["R","Motorausfall unmittelbar nach dem Start, Bahn reicht nicht mehr?","Nachdrücken, 73 kt, geradeaus bzw. max. 30° seitlich notlanden",["Sofort umkehren und auf der Bahn landen","Steilkurve 180° zurück zum Platz","Hochziehen, um Höhe zu gewinnen"],"Checkliste S. 9/11, AFM (Flughandbuch) 3.02: niemals zur Bahn zurückkehren.","HR200 #18"],
+["R","Motorausfall im Reiseflug, genug Höhe: erste Schritte?","73 kt, Pumpe EIN, Gemisch voll reich, Gas ¼ vor, Zündung BOTH",["Gemisch voll arm, Zündung AUS, sofort Notlandung","Klappen 20°, 60 kt, Pumpe AUS","Vergaservorwärmung aus, Gemisch arm, Zündung L"],"Checkliste S. 11. Propeller steht → Anlasser. Sonst Notlandung, 7700.","HR200 #19"],
+["R","Notlandung ohne Motor: wann Klappen voll und Batterie AUS?","Im Endanflug",["Sofort nach dem Motorausfall","Erst nach dem Aufsetzen","Gar nicht, Klappen bleiben ein"],"Checkliste S. 12: im Endanflug Klappen voll, Batterie AUS, Haube entriegeln.","HR200 #20"],
+["R","Motorbrand im Flug: welche Fahrt?","85 kt laut Checkliste (AFM: 86 kt)",["73 kt","96 kt","110 kt","60 kt"],"Widerspruch: Checkliste S. 11 nennt 85 kt, AFM (Flughandbuch) 3.05 nennt 86 kt. Brandhahn zu, Vollgas bis Motorstillstand, nicht wieder anlassen.","HR200 #21"],
+["R","Vergaserbrand beim Anlassen?","Weiter durchdrehen, Brandhahn ziehen, Pumpe AUS, Vollgas, Gemisch arm",["Sofort Anlasser loslassen und aussteigen","Pumpe EIN, Gemisch reich","Zündung AUS, Vorwärmung ziehen"],"Checkliste S. 11: der Motor saugt den Kraftstoff an. Brennt es weiter: alles AUS, aussteigen, löschen.","HR200 #22"],
+["R","Kabelbrand?","Lüftung schließen/reduzieren, Batterie + Alternator AUS, Schutzschalter ziehen, Feuerlöscher, schnell landen",["Lüftung voll öffnen, Alternator EIN lassen","Brandhahn ziehen, Vollgas","Nur den Funk ausschalten und weiterfliegen"],"Checkliste S. 12.","HR200 #23"],
+["R","Rauer Motorlauf: was zuerst?","Vergaservorwärmung voll ziehen",["Zündung auf L","Gemisch voll arm","Gas sofort auf Leerlauf"],"Checkliste S. 11: danach Gemisch, dann Zündung L/R/BOTH prüfen.","HR200 #24"],
+["R","Vergaservorwärmung: wie benutzen?","Immer ganz an oder ganz aus",["Halb gezogen ist am wirksamsten","Nur am Boden benutzen","Nur über 25 °C Außentemperatur"],"Checkliste S. 12: Zwischenstellung kann Vereisung verstärken. Landevorbereitung: EIN bei OAT (Außentemperatur) unter 25 °C.","HR200 #25"],
+["R","Niedriger Öldruck im Flug?","Öltemperatur prüfen, Leistung minimal, nächsten Flugplatz anfliegen",["Ignorieren, wenn die Temperatur normal ist","Vollgas, um Öldruck aufzubauen","Sofort Motor abstellen"],"Checkliste S. 12, auf Notlandung vorbereitet sein.","HR200 #26"],
+["R","Ladekontrolle leuchtet: wie lange reicht die Batterie etwa?","ca. 20 min",["ca. 5 min","ca. 60 min","ca. 2 h"],"Checkliste S. 12: erst Alternator AUS/EIN, leuchtet weiter → Alternator AUS, Verbraucher minimieren, landen.","HR200 #27"],
+["R","Sicherheitslandung: Überflug-Geschwindigkeit mit Klappen 10°?","80 kt laut Checkliste (AFM: 73 kt)",["96 kt","60 kt","110 kt"],"Widerspruch: Checkliste S. 12 Überflug 80 kt, Anflug 70–75 kt; AFM 3.04 Überflug 73 kt, Anflug 68 kt.","HR200 #28"],
+["R","Unbeabsichtigtes Trudeln ausleiten?","Leerlauf, Seitenruder voll gegen Drehrichtung, Querruder neutral, Höhenruder ¼ nachdrücken",["Vollgas, Höhenruder voll ziehen","Querruder voll gegen Drehrichtung","Seitenruder in Drehrichtung, ziehen"],"Checkliste S. 12. Trudeln ist bei der HR200 verboten.","HR200 #29"],
+["R","Welches Dokument gehört NICHT zu den Bordpapieren laut Checkliste?","Das Medical des Piloten",["ARC (Airworthiness Review Certificate, Nachprüfschein)","Lärmschutzzeugnis","Flugfunkgenehmigung"],"Checkliste S. 5: Bordbuch, Versicherung, Eintragungsschein, Lufttüchtigkeitszeugnis, ARC, AFM, Funkgenehmigung, Checklisten, Lärmschutz. Das Medical ist ein persönliches Dokument.","HR200 #30"],
+["R","CO-Warner (Kohlenmonoxid) zeigt über 100 ppm?","Maximal lüften, Flug abbrechen, nächsten geeigneten Platz anfliegen",["Weiterfliegen, Heizung voll auf","Nur Heizung schließen und beobachten","Ignorieren, Warner ist oft falsch"],"Checkliste S. 4: unter 50 ppm weiter, über 50 ppm Heizung zu, über 100 ppm abbrechen.","HR200 #31"],
+["A","Was führst du persönlich mit?","Lizenz bzw. Ausbildungsnachweis, Medical, Lichtbildausweis, Sprechfunkzeugnis",["Nur den Führerschein","Bordbuch und Lufttüchtigkeitszeugnis","Nur das Flugbuch"],"Allgemeine Liste #2. Bordbuch und Lufttüchtigkeitszeugnis gehören zum Flugzeug.","Allg. #2"],
+["A","Wann darfst du Passagiere mitnehmen?","3 Starts, Anflüge und Landungen in den letzten 90 Tagen in derselben Klasse",["1 Start und Landung in 30 Tagen","5 Starts und Landungen in 60 Tagen","3 Starts und Landungen in 12 Monaten"],"FCL.060 (EASA-Regel zur Flugerfahrung). Nachts zusätzlich 1 bei Nacht.","Allg. #3"],
+["A","Wie lange gilt die SEP-Klassenberechtigung (Single Engine Piston, einmotorig Kolben)?","2 Jahre",["1 Jahr","3 Jahre","5 Jahre","unbefristet"],"Verlängerung: 12 h in 12 Monaten vor Ablauf, 6 h PIC (verantwortlicher Pilot), 12 Starts/Landungen, 1 h mit Fluglehrer; oder Befähigungsüberprüfung.","Allg. #4"],
+["A","Was darfst du mit der PPL(A) (Privatpilotenlizenz Flugzeug)?","Nicht gewerblich als PIC (verantwortlicher Pilot) oder Copilot fliegen",["Gewerblich Passagiere befördern","Nachts ohne Zusatzberechtigung fliegen","Nach IFR (Instrumentenflugregeln) fliegen"],"Kostenteilung unter Bedingungen erlaubt, Nachtflug nur mit Night Rating.","Allg. #5"],
+["A","Woher holst du NOTAMs (Notices to Airmen, aktuelle Betriebshinweise)?","DFS-AIS-Portal (Flugsicherung, Luftfahrtinformationsdienst)",["Wikipedia","Nur vom Fluglehrer mündlich","Aus der ICAO-Karte"],"Prüfen: Start, Ziel, Ausweich, Strecke, aktive ED-R (Flugbeschränkungsgebiete), Gültigkeit.","Allg. #9"],
+["A","Kraftstoffreserve am Tag nach VFR (Sichtflugregeln)?","Mindestens 30 min Reiseflug",["Mindestens 10 min","Mindestens 45 min","Mindestens 60 min"],"NCO.OP.125 (EASA-Betriebsregel), dazu Rollen und Zuschlag. Viele Schulen verlangen mehr.","Allg. #11"],
+["A","METAR (Flugplatzwetter) EDDB 181350Z 24012G22KT 9999 SCT025 BKN040 12/06 Q1013: Wind?","240° mit 12 kt, Böen 22 kt",["120° mit 24 kt, Böen 22 kt","240° mit 22 kt, Böen 12 kt","024° mit 12 kt, Böen 22 kt"],"24012G22KT = Richtung 240°, 12 kt, G = gusts (Böen) 22 kt. Q1013 = QNH (Luftdruck auf Meereshöhe) 1013 hPa.","Allg. #13"],
+["A","Was bedeutet BKN (broken)?","5–7 Achtel Bedeckung",["1–2 Achtel","3–4 Achtel","8 Achtel"],"FEW 1–2, SCT 3–4, BKN 5–7, OVC 8. Ceiling (Hauptwolkenuntergrenze) = tiefste BKN- oder OVC-Schicht.","Allg. #14"],
+["A","Was bedeutet TEMPO im TAF (Flugplatzvorhersage)?","Vorübergehende Änderung, je unter 1 h, insgesamt weniger als die Hälfte des Zeitraums",["Allmähliche, dauerhafte Änderung","30 % Wahrscheinlichkeit","Änderung ab sofort für den Rest des Tages"],"BECMG = allmählich und dauerhaft, PROB30 = 30 % Wahrscheinlichkeit.","Allg. #15"],
+["A","GAFOR (General Aviation Forecast, Gebietsvorhersage) Kategorie X?","Geschlossen",["Offen","Schwierig","Kritisch"],"C offen, O schwierig, D kritisch, X geschlossen.","Allg. #16"],
+["A","VMC-Minima (Sichtflugwetterbedingungen) in Luftraum C, D, E unter FL100 (Flugfläche 100)?","5 km Flugsicht, 1500 m horizontal, 1000 ft vertikal",["1,5 km Sicht, frei von Wolken","8 km Sicht, 1500 m horizontal, 1000 ft vertikal","5 km Sicht, 1000 m horizontal, 500 ft vertikal"],"SERA.5001 (europäische Luftverkehrsregeln). Ab FL100: 8 km.","Allg. #20"],
+["A","Luftraum G unter 3000 ft MSL (über Meer) bzw. 1000 ft AGL (über Grund), Deutschland, max. 140 kt?","1,5 km Flugsicht, frei von Wolken, Erdsicht",["5 km, 1500 m Wolkenabstand","800 m, frei von Wolken","8 km, frei von Wolken"],"§ 40 LuftVO (Luftverkehrs-Ordnung). Grundsätzlich 5 km, in Deutschland 1,5 km bis 140 kt.","Allg. #21"],
+["A","Was brauchst du für den Einflug in Luftraum D / CTR (Kontrollzone) Berlin?","Freigabe, Funkkontakt, Transponder",["Nur eine Erstmeldung","Nur einen Transponder","Einen IFR-Flugplan (Instrumentenflug)"],"Bei Wolkenuntergrenze unter 1500 ft oder Bodensicht unter 5 km zusätzlich Sonderfreigabe.","Allg. #22"],
+["A","Special VFR (Sonder-Sichtflug): Mindestflugsicht?","1500 m, frei von Wolken, Erdsicht, max. 140 kt",["800 m","5 km","3 km, 500 ft unter Wolken"],"SERA.5010. Start/Landung: Bodensicht ≥ 1500 m, Wolkenuntergrenze ≥ 600 ft.","Allg. #23"],
+["A","Was gilt in einer TMZ (Transponder Mandatory Zone)?","Transponder Mode C/S mit Höhenübermittlung muss an sein",["Funkpflicht mit Erstmeldung","Einflug nur mit Freigabe","Höhere VMC-Minima"],"RMZ (Radio Mandatory Zone) = Funkpflicht. Die VMC-Minima ändern sich in beiden nicht.","Allg. #24"],
+["A","Was ist ein ED-R?","Flugbeschränkungsgebiet, Einflug nur mit Genehmigung",["Gefahrengebiet, Einflug frei","Segelfluggelände","Pflichtmeldepunkt"],"Über Berlin: ED-R 146 (Regierungsviertel), dazu zeitweise aktive ED-R per NOTAM.","Allg. #25"],
+["A","Schwerpunkt zu weit hinten?","Instabil, Stall und Trudeln schwer auszuleiten",["Hohe Ruderkräfte, schweres Abfangen","Keine Auswirkung","Kürzere Startstrecke, sonst nichts"],"Zu weit vorne: hohe Ruderkräfte, schweres Abfangen bei der Landung.","Allg. #28"],
+["A","HR200 laut AFM (Flughandbuch): Zuschlag Startstrecke auf trockenem Gras?","+15 %",["+5 %","+30 %","+50 %"],"Außerdem je 2 kt Rückenwind +10 %, 10 kt Gegenwind ×0,85.","Allg. #30"],
+["A","Faustregel Dichtehöhe pro °C über ISA (Standardatmosphäre)?","etwa +120 ft",["etwa +30 ft","etwa +400 ft","etwa +1000 ft"],"Druckhöhe ≈ Platzhöhe + (1013 − QNH) × 30 ft.","Allg. #31"],
+["A","1:60-Regel: 3 NM (Seemeilen) Ablage nach 30 NM. Kursfehler?","6°",["3°","10°","18°"],"Kursfehler = Ablage × 60 / geflogene Strecke = 3 × 60 / 30.","Allg. #33"],
+["A","Umleitung zum Ausweichplatz: was zuerst?","Position bestimmen, Kurs grob schätzen und sofort hindrehen",["Erst alles genau rechnen, dann drehen","Erst FIS (Fluginformationsdienst) fragen und warten","Kreisen, bis der Plan fertig ist"],"Danach Entfernung, Zeit, Kraftstoff, Luftraum prüfen, FIS informieren, Kurs verfeinern.","Allg. #35"],
+["A","Du hast dich verflogen. Erste Maßnahme?","Kurs und Höhe halten, keine Panik",["Sofort Kreise fliegen","Tief sinken, um Ortsschilder zu lesen","Sofort Mayday rufen"],"Dann Unsicherheitskreis, Linienmerkmale, VOR, FIS fragen; notfalls Sicherheitslandung.","Allg. #36"],
+["A","Transpondercode bei Funkausfall?","7600",["7700","7500","7000","2000"],"7000 VFR, 7700 Notfall, 7600 Funkausfall, 7500 Entführung.","Allg. #37"],
+["A","Funkausfall: was nach den Prüfungen (Lautstärke, Frequenz, Stecker, Headset)?","7600 rasten, blind senden, VMC halten, nächsten geeigneten Platz anfliegen",["7700 rasten und sofort notlanden","Einfach in die CTR einfliegen","Squawk 7000 lassen und weiterfliegen wie geplant"],"Mit Freigabe in der CTR: nach Freigabe weiter, auf Lichtsignale achten.","Allg. #38"],
+["A","Lichtsignal an Flugzeug in der Luft: rotes Blinken?","Flugplatz unsicher, nicht landen",["Landung frei","Zurückkehren, Landung vorbereiten","Vorfahrt gewähren, weiter kreisen"],"Grün Dauer = Landung frei, rot Dauer = weiter kreisen, grün blinkend = zurückkehren.","Allg. #39"],
+["A","Notruf auf welcher Frequenz, wenn kein Kontakt?","121,5 MHz, Transponder 7700",["123,45 MHz","118,0 MHz","122,8 MHz"],"MAYDAY ×3, Station, Kennung, Notfall, Absicht, Position, Höhe, Kurs, Personen an Bord.","Allg. #40"],
+["A","Stall ausleiten?","Nachdrücken, Vollgas, Flügel mit Seitenruder waagerecht, sanft abfangen",["Ziehen und Querruder voll","Gas raus und ziehen","Klappen sofort voll ausfahren"],"Anzeichen: Überziehwarnung, Buffeting (Schütteln), weiche Ruder.","Allg. #42"],
+["A","Um wie viel steigt die Überziehgeschwindigkeit bei 60° Querlage?","ca. 41 %",["ca. 7 %","ca. 19 %","ca. 100 %"],"Lastvielfaches n = 1/cos 60° = 2, Vs steigt mit √n. HR200: 60 → 84 kt.","Allg. #43"],
+["A","Spiralsturz beenden?","Gas raus, Flügel waagerecht, dann sanft abfangen",["In der Schräglage kräftig ziehen","Vollgas und ziehen","Seitenruder voll gegen die Drehung, nachdrücken"],"Nicht in der Schräglage ziehen. Vne und g-Limit beachten. Seitenruder voll gegen = Trudeln.","Allg. #44"],
+["A","Woran unterscheidet sich Trudeln von der Spirale?","Trudeln: Strömung abgerissen, Fahrt niedrig; Spirale: Strömung anliegend, Fahrt steigt",["Beide sind dasselbe","Trudeln: Fahrt steigt stark","Spirale: Strömung abgerissen"],"Bei der HR200 ist Trudeln verboten.","Allg. #45"],
+["A","Bei welchen Bedingungen ist Vergaservereisung am wahrscheinlichsten?","Hohe Luftfeuchte, ca. −10 bis +30 °C, reduzierte Leistung",["Nur unter −20 °C","Nur bei Vollgas","Nur in Wolken über FL100"],"Anzeichen: Drehzahlabfall, rauer Lauf. Vorwärmung voll ziehen.","Allg. #48"],
+["A","Simulierte Notlandung: was zuerst?","Fluglage und beste Gleitgeschwindigkeit (73 kt)",["Sofort Mayday funken","Fehlersuche Motor","Klappen voll"],"Dann Feld gegen den Wind (6 S), Höhe einteilen, Fehlersuche, Notruf und 7700.","Allg. #51"],
+["A","Unterschied Sicherheitslandung zu Notlandung?","Sicherheitslandung vorsorglich mit laufendem Motor, Feld kann überflogen werden",["Sicherheitslandung nur nach Motorausfall","Notlandung immer auf einem Flugplatz","Kein Unterschied"],"Notlandung: erzwungen, ein Versuch.","Allg. #52"],
+["A","Zwei Flugzeuge auf Gegenkurs?","Beide weichen nach rechts aus",["Beide weichen nach links aus","Das schnellere weicht aus","Das höhere sinkt"],"SERA.3210. Kreuzend: von rechts hat Vorfahrt. Überholen: rechts vorbei.","Allg. #55"],
+["A","Halbkreisflugregel, missweisender Kurs 090°, über 3000 ft AGL?","Ungerade Tausender + 500 ft, z. B. 3500 oder 5500 ft",["Gerade Tausender + 500 ft, z. B. 4500 ft","Volle Tausender, z. B. 4000 ft","Frei wählbar"],"000–179° ungerade + 500, 180–359° gerade + 500.","Allg. #56"],
+["A","Mindesthöhe über Städten?","1000 ft über höchstem Hindernis im Umkreis von 600 m",["500 ft über Grund","2000 ft über Grund","1000 ft über Grund im Umkreis von 300 m"],"SERA.5005(f). Sonst 500 ft über Grund oder Wasser.","Allg. #57"],
+["A","IMSAFE steht für?","Illness, Medication, Stress, Alcohol, Fatigue, Eating",["Instruments, Mixture, Switches, Altimeter, Fuel, Engine","Ignition, Magnetos, Starter, Avionics, Flaps, Engine","Ice, Mist, Storm, Altitude, Fog, Echo"],"Selbstcheck vor jedem Flug.","Allg. #59"],
+["N","Leermasse der F-GNNF laut Wägebericht?","555 kg",["520 kg","580 kg","610 kg"],"Beladungsplan F-GNNF, Wägebericht 03.06.2022: Leermasse 555 kg, Hebelarm 0,266 m.","Beladungsplan NF"],
+["N","Zulässiger Schwerpunktbereich der F-GNNF?","0,22 bis 0,46 m",["0,15 bis 0,35 m","0,30 bis 0,55 m","0,266 bis 0,45 m"],"Beladungsplan F-GNNF. 0,266 m ist nur der Leermassen-Schwerpunkt.","Beladungsplan NF"],
+["N","Maximale Zuladung der F-GNNF inklusive Kraftstoff?","225 kg",["160 kg","260 kg","300 kg"],"Beladungsplan: 780 kg max. Abflugmasse − 555 kg Leermasse = 225 kg.","Beladungsplan NF"],
+["N","Hebelarme Pilot/Fluggast, Kraftstoff, Gepäck?","0,45 m / 1,10 m / 1,20 m",["0,45 m / 1,20 m / 1,10 m","0,266 m / 1,10 m / 1,20 m","0,50 m / 0,90 m / 1,50 m"],"Beladungsplan F-GNNF.","Beladungsplan NF"],
+["N","Volle ausfliegbare Tanks (118 l) wiegen?","85 kg (118 l × 0,72 kg/l)",["118 kg","70 kg","95 kg"],"Beladungsplan F-GNNF: AVGAS 0,72 kg/l.","Beladungsplan NF"],
+["N","Zwei Personen à 80 kg, kein Gepäck: wie viel Kraftstoff maximal?","65 kg, etwa 90 l",["85 kg, volle 118 l","45 kg, etwa 62 l","75 kg, etwa 104 l"],"780 − 555 − 160 = 65 kg; 65 / 0,72 ≈ 90 l. Volle Tanks wären 20 kg zu schwer.","Beladungsplan NF"],
+["N","Schwerpunkt im Beispiel 2 × 80 kg, 65 kg Kraftstoff?","0,373 m, innerhalb 0,22–0,46 m",["0,266 m","0,48 m, außerhalb","0,45 m, genau an der Grenze"],"(555 × 0,266 + 160 × 0,45 + 65 × 1,10) / 780 ≈ 0,373 m.","Beladungsplan NF"],
+["N","Prüfer: 'Wie viel Zuladung noch?' Faustregel bei voller Masse?","Jedes kg mehr Zuladung kostet etwa 1,4 l Kraftstoff",["Jedes kg kostet etwa 0,72 l","Jedes kg kostet etwa 1 l","Zuladung und Kraftstoff sind unabhängig"],"1 kg / 0,72 kg/l ≈ 1,4 l (Beladungsplan NF). Zuladung immer im Rahmen der 225 kg prüfen.","Beladungsplan NF / Forum"],
+["N","Warum ist die max. Rollmasse (785 kg) höher als die max. Abflugmasse (780 kg)?","5 kg Kraftstoff werden beim Anlassen und Rollen verbraucht",["Fehler im Beladungsplan","Für das Gepäck","Für das Öl"],"Beladungsplan F-GNNF: Anlassen/Rollen −5 kg.","Beladungsplan NF"],
+["N","Avionik in der F-GNNF einschalten?","Kein Avionik-Hauptschalter: jedes Gerät einzeln schalten",["Ein Avionik-Hauptschalter für alles","Avionik geht automatisch mit der Batterie an","Über den Alternator-Schalter"],"Laut Alex (eigene Erfahrung mit der NF), nicht aus AFM oder Checkliste.","Alex / NF"],
+["N","Kompensierbericht F-GNNF: missweisender Kurs (mw) 090°, welchen Kompasskurs steuern?","091°",["089°","090°","092°"],"Kompensierbericht 11.08.2022: Deviation bei 090° = −1°, Steuertabelle 091.","Deviation NF"],
+["N","Kompensierbericht: mw 000° (Nord) steuern mit Kompasskurs?","358°",["002°","000°","356°"],"Deviation bei 000° = +2°, Kompasskurs 358 (Steuertabelle am Kompass).","Deviation NF"],
+["N","Unter welchen Bedingungen wurde der Kompass der NF kompensiert?","Bei laufendem Motor (Reisedrehzahl), mit VHF 1 und Navigationslicht an",["Motor aus, alle Geräte aus","Im Flug mit GPS","Nur mit Batterie, ohne Funk"],"Kompensierbericht LSCO 11.08.2022. Die Steuertabelle hängt am Kompass.","Deviation NF"],
+["N","Welche Landearten verlangt die Schul-Einweisung HR20?","Normallandung, Landung ohne Klappen, Landung mit Klappe 1. Stellung",["Nur Normallandung","Kurzlandung und Seitenwindlandung auf Gras","Landung mit Rückenwind"],"Einweisung HR20 (Flugschule Hans Grade): alle 3 Landearten sollen gut beherrscht werden, dazu Ziellandeübung und Durchstarten.","Einweisung HR20"],
+["N","Ziellandeübung laut Einweisung HR20 aus welcher Höhe?","2000 ft AGL (über Grund) bzw. 1000 ft AGL",["500 ft AGL","3000 ft AGL","Nur aus der Platzrunde in 1000 ft"],"Einweisung HR20: mind. 2× Ziellandeübung aus 2000/1000 ft AGL. Prüfer im Forum: oft aus 2000 ft mit Gas raus.","Einweisung HR20 / Forum"],
+["N","Checkliste Flugvorbereitung: was prüfst du am Zielflugplatz?","Öffnungszeiten, Kraftstoff, Hangar, Slot",["Nur die Pistenlänge","Nur die Landegebühren","Nichts, das macht die Schule"],"Checkliste Flugvorbereitung (Ausgabe 12/2019), Punkt 9.","Checkliste Flugvorbereitung"],
+["N","Prüfer im Flug: 'Wie hoch darfst du hier steigen?'","Bis unter die Untergrenze des kontrollierten Luftraums (C/D) an deiner Position, von der ICAO-Karte abgelesen",["Bis FL100 (Flugfläche 100), überall","Bis 5000 ft, immer","So hoch die Wolken es erlauben, Luftraum egal"],"Typische Prüferfrage (Forum). Ohne Freigabe nicht in C oder D einfliegen.","Forum-Prüferfragen"],
+["N","Prüfer: 'Wie weit kommst du noch mit dem Restsprit?'","Restkraftstoff minus 30 min Reserve, durch Verbrauch (ca. 25 l/h) = Zeit, mal Grundgeschwindigkeit",["Restkraftstoff durch 0,72","Restkraftstoff mal Grundgeschwindigkeit","Reserve nicht abziehen"],"Verbrauch HR200 #13 (ca. 25 l/h bei 75 %), Reserve Allg. #11. Typische Prüferfrage (Forum).","Forum / HR200 #13"],
+["N","VOR (UKW-Drehfunkfeuer): OBS (Kurswähler) auf 090, Anzeige TO, Nadel rechts. Wohin korrigieren?","Nach rechts, die Nadel zeigt zum gewählten Radial",["Nach links, weg von der Nadel","Gar nicht, TO heißt auf Kurs","Umkehrkurve fliegen"],"Bei TO und Kurs ungefähr wie eingestellt: zur Nadel hin fliegen. Typische Prüferfrage (Forum).","Forum-Prüferfragen"],
+["N","Prüfer zieht im Steigflug das Gas: was tust du?","Sofort nachdrücken auf 73 kt, Feld voraus wählen (max. ca. 30° seitlich)",["Weiter steigen, bis die Fahrt weg ist","Umkehrkurve zum Platz","Erst Motor neu starten, dann Fluglage"],"HR200 #18 (Checkliste S. 9/11), typische Prüfersituation (Forum).","Forum / HR200 #18"],
+["N","Landung ohne Klappen: Endanflug-Geschwindigkeit laut Checkliste?","80 kt (Knoten)",["70 kt","65 kt","96 kt"],"Checkliste S. 14: 80 kt ohne, 75 kt mit 10°, 70 kt mit 20°. Längere Landestrecke einplanen.","HR200 #17 / Forum"],
+["N","Du bist am Wendepunkt 3 min später als geplant. Was tust du mit dem Flugdurchführungsplan?","Grundgeschwindigkeit neu rechnen, ETA (voraussichtliche Ankunftszeit) der nächsten Punkte und den Kraftstoff anpassen",["Ignorieren, das gleicht sich aus","Schneller fliegen, um die Zeit aufzuholen","Den Plan wegwerfen und GPS nutzen"],"Allg. #34; typische Prüferfrage (Forum).","Forum / Allg. #34"],
+["N","ED-R 70 südlich von Holzdorf (ETSH): vertikale Ausdehnung?","GND (Boden) bis 1500 ft MSL, per NOTAM bis 2000 ft",["GND bis FL100","1500 ft bis 5000 ft MSL","Nur am Wochenende bis 1000 ft"],"Laut aktueller Recherche (AIP/NOTAM). Vor dem Flug im NOTAM-Briefing bestätigen.","Süd/Holzdorf"],
+["N","Aktivzeit ED-R 70 und was heißt das für Montag?","Mo 06:00 UTC bis Fr 13:00 UTC, also Montag ab 07:00 Ortszeit (Winterzeit) aktiv",["Nur am Wochenende aktiv","Mo ab 06:00 Ortszeit","Montag nicht aktiv"],"Winterzeit ab 25.10.: Ortszeit = UTC+1. Am Prüfungstag also aktiv.","Süd/Holzdorf"],
+["N","Flugplatz Holzdorf (ETSH): was gilt für Landungen?","PPR (Prior Permission Required, nur mit vorheriger Genehmigung), NOTAM P7457/26",["Frei für alle VFR-Flüge","Nur Segelflug","Geschlossen ohne Ausnahme"],"NOTAM P7457/26.","Süd/Holzdorf"],
+["N","NOTAM P7457/26: was bedeuten die Teile, und was heißt EST?","Serie P, Nummer 7457, Jahr 2026; EST = estimated, Ende nur geschätzt",["Seite 7457, Flugplatz P, 26 Tage gültig","Priorität P, 26 Stunden gültig","EST = established, dauerhaft"],"Aufbau der NOTAM-Nummer: Serienbuchstabe, laufende Nummer / Jahr.","Süd/Holzdorf"],
+["N","Wie lange ist ein Flugberatungs-/NOTAM-Briefing sinnvoll gültig?","24 Stunden, danach neu holen",["7 Tage","1 Stunde","Bis zum Ende des Monats"],"Laut Vorgabe; am Montagmorgen trotzdem neu prüfen.","Briefing"],
+["N","Antennen der F-GNNF: welche ist wofür?","Oben und unten (untere abgewinkelt) = VHF-Funk, V-förmige am Seitenleitwerk = VOR, kleiner Stummel/Flosse unten = Transponder",["Oben = VOR, V-förmige = Funk, unten = ELT","V-förmige = Transponder, Stummel unten = VOR","Alle drei sind Funkantennen"],"Laut Alex' Fluglehrer. ELT-Antenne/Einbauort unbekannt: am Flugzeug nachsehen.","Fluglehrer / NF"],
+];
+
+
+const ROUTES = [
+          { title: "Route 1", detail: "EDAZ (Schönhagen) > AK Potsdam (Autobahnkreuz) > Vattenfall HKW (Heizkraftwerk Lichterfelde) > N (Pflichtmeldepunkt November) > EDDB (Flughafen BER) Low Approach (tiefer Überflug der Bahn) > M (Pflichtmeldepunkt Mike) > KLF (VOR Klasdorf) > EDOD (Reinsdorf) > EDAZ" },
+          { title: "Route 2", detail: "Genauso möglich wie Route 1 und 3: alle drei Routen können in der Prüfung drankommen (die Kreise auf 1 und 3 waren nur eigene Übung). Streckenführung von Route 2 liegt hier noch nicht vor, bitte aus den Schulunterlagen nehmen." },
+          { title: "Route 3", detail: "EDAZ (Schönhagen) > EDBO (Oehna) > KLF (VOR Klasdorf) > M (Mike) > EDDB (BER) Low Approach > M > Mellensee > Luckenwalde > EDAZ" },
+          { title: "Südvariante", detail: "Holzdorf ETSH CTR (militärische Kontrollzone, werktags meist aktiv), viel Arbeit mit FIS (Fluginformationsdienst)" },
+        ];
+const PROPS = [
+          { label: "VOR KLF (UKW-Drehfunkfeuer Klasdorf)", value: "115.15" },
+          { label: "VOR BBI (Berlin-Brandenburg)", value: "114.10" },
+          { label: "Toleranzen", value: "Höhe ±150 ft, Kurs ±10°, Fahrt +15/−5 kt (Knoten)" },
+        ];
+const CONTRA = 'AFM (Aircraft Flight Manual, Flughandbuch) und Schul-Checkliste HR20 sagen hier Unterschiedliches. Kraftstoff: AFM nur AVGAS 100LL, Checkliste auch UL91. Motorbrand: 86 kt laut AFM, 85 kt laut Checkliste. Sicherheitslandung: AFM 73 kt Überflug und 68 kt Anflug, Checkliste 80 kt und 70–75 kt. Propeller bei F-GNNF (Sensenich oder Hoffmann) noch klären. In der Schule gilt die Checkliste, im Zweifel den Fluglehrer fragen.';
+
+const REQ=3;
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));return localStorage.getItem(k)===JSON.stringify(v)}catch(e){return false}}
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+const S={day:'fr',done:load('cr_done',{}),filter:'alle',st:load('cr_st',{}),cnt:load('cr_cnt',{}),struck:load('cr_struck',{}),notes:load('cr_notes',{}),
+ oral:load('cr_oral',true),queue:[],pos:0,picked:null,shown:false,options:[],showStruck:false,storageOk:null,lastSave:'',ioMsg:''};
+S.storageOk=save('cr_test',1);
+function persist(){const ok=[save('cr_st',S.st),save('cr_cnt',S.cnt),save('cr_struck',S.struck),save('cr_notes',S.notes),save('cr_done',S.done)].every(Boolean);
+ S.storageOk=ok;S.lastSave=ok?new Date().toLocaleTimeString('de-DE'):''}
+const grp={robin:'R',allg:'A',nf:'N'};
+function pool(){return CARDS.map((_,i)=>i).filter(i=>!S.struck[i]&&(S.filter==='alle'||CARDS[i][0]===grp[S.filter]))}
+const sc=i=>(S.st[i]&&S.st[i].s)||0;
+const cn=i=>S.cnt[i]||{n:0,r:0,w:0};
+function startRound(){S.queue=shuffle(pool().filter(i=>sc(i)<REQ));S.pos=0;resetCard()}
+function resetCard(){S.picked=null;S.shown=false;const c=cur();S.options=c<0?[]:shuffle([CARDS[c][2],...CARDS[c][3]])}
+const cur=()=>S.pos<S.queue.length?S.queue[S.pos]:-1;
+function pick(k){const c=cur();if(S.picked!==null||c<0)return;const o=S.options[k];S.picked=o;const ok=o===CARDS[c][2];
+ S.st[c]={s:ok?sc(c)+1:0};const p=cn(c);S.cnt[c]={n:p.n+1,r:p.r+(ok?1:0),w:p.w+(ok?0:1)};
+ if(!ok)S.queue.push(c);persist();render()}
+function next(){S.pos++;resetCard();render()}
+function strike(i){S.struck[i]=true;S.queue=S.queue.filter((x,k)=>k<S.pos||x!==i);persist();resetCard();render()}
+function unstrike(i){delete S.struck[i];persist();render()}
+function stat(ids){const act=ids.filter(i=>!S.struck[i]);let r=0,w=0;ids.forEach(i=>{r+=cn(i).r;w+=cn(i).w});
+ return{act:act.length,str:ids.length-act.length,seen:ids.filter(i=>cn(i).n>0).length,n:r+w,r,w,pct:r+w?Math.round(r/(r+w)*100):0,lern:act.filter(i=>sc(i)>=REQ).length}}
+function render(){
+ const d=DAYS.find(x=>x.key===S.day);const dd=d.tasks.filter(t=>S.done[t.id]).length;
+ let h='';
+ h+=`<div class="status ${S.storageOk?'ok':'bad'}">${S.storageOk?`Speichern: aktiv${S.lastSave?` (zuletzt gespeichert ${S.lastSave})`:''}`:'Speichern nicht möglich in diesem Browser (z. B. privater Modus). Bitte per Export sichern.'}</div>`;
+ h+=`<h2>Tagesplan</h2><div class="seg">${DAYS.map(x=>`<button class="${x.key===S.day?'on':''}" data-day="${x.key}">${esc(x.label)}</button>`).join('')}</div>
+ <p>${esc(d.note)} Erledigt: ${dd} von ${d.tasks.length}.</p>${d.tasks.map(t=>`<label class="task"><input type="checkbox" data-task="${t.id}" ${S.done[t.id]?'checked':''}> <span>${esc(t.t)}</span></label>`).join('')}`;
+ const all=CARDS.map((_,i)=>i),t=stat(all),cat=g=>stat(all.filter(i=>CARDS[i][0]===g));
+ const row=(n,s)=>`<tr><td>${n}</td><td>${s.act}</td><td>${s.str}</td><td>${s.seen}</td><td>${s.n}</td><td>${s.r}</td><td>${s.w}</td><td>${s.n?s.pct+' %':'–'}</td><td>${s.lern}</td></tr>`;
+ h+=`<h2>Quiz</h2><p>Übersicht: ${t.act} aktive Fragen, ${t.str} gestrichen. Mindestens einmal gesehen: ${t.seen}. Antworten: ${t.n}, davon richtig ${t.r} und falsch ${t.w}${t.n?` (${t.pct} % richtig)`:''}. Gelernt (3 nacheinander richtig): ${t.lern}.</p>
+ <div class="tw"><table><tr><th>Kategorie</th><th>Aktiv</th><th>Gestr.</th><th>Gesehen</th><th>Antw.</th><th>Richtig</th><th>Falsch</th><th>%</th><th>Gelernt</th></tr>${row('Robin',cat('R'))}${row('Allgemein',cat('A'))}${row('F-GNNF',cat('N'))}</table></div>`;
+ const P=pool(),mastered=P.filter(i=>sc(i)>=REQ).length;
+ h+=`<div class="seg">${[['alle','Alle'],['robin','Robin'],['allg','Allgemein'],['nf','F-GNNF & Prüferfragen']].map(([v,l])=>`<button class="${v===S.filter?'on':''}" data-filter="${v}">${l}</button>`).join('')}</div>
+ <label class="task"><input type="checkbox" id="oral" ${S.oral?'checked':''}> <span>Erst laut antworten (wie in der mündlichen Prüfung)</span></label>
+ <p>Sitzt: ${mastered} von ${P.length}. Eine Frage sitzt nach 3 richtigen Antworten nacheinander; eine falsche setzt sie auf null. Gespeichert wird nach jeder Antwort.</p>`;
+ const c=cur();
+ if(c>=0){const C=CARDS[c],s=Math.min(sc(c),REQ);
+  h+=`<div class="card"><div class="h3">Frage ${S.pos+1} von ${S.queue.length}</div><div class="meta">${esc(C[5])} · Fortschritt ${'●'.repeat(s)+'○'.repeat(REQ-s)} · gesehen ${cn(c).n}×</div><p class="q">${esc(C[1])}</p>`;
+  if(S.oral&&!S.shown&&S.picked===null)h+=`<button class="primary" id="show">Antworten zeigen</button>`;
+  else h+=S.options.map((o,k)=>{let cl='opt';if(S.picked!==null&&o===C[2])cl+=' right';else if(S.picked===o)cl+=' wrong';return`<button class="${cl}" data-opt="${k}">${esc(o)}</button>`}).join('');
+  if(S.picked!==null){const ok=S.picked===C[2];h+=`<p class="${ok?'okt':'badt'}"><b>${ok?'Richtig':'Falsch. Richtig: '+esc(C[2])}</b></p><p class="sub">${esc(C[4])}</p><button class="primary" id="next">Weiter</button>`}
+  h+=`<label class="lbl">Meine Notiz / Korrektur zu dieser Frage<input id="note" type="text" value="${esc(S.notes[c]||'')}" placeholder="z. B. Wert in der NF anders, Fluglehrer sagt …"></label><button id="strike">Frage streichen</button></div>`;
+ }else if(mastered===P.length)h+=`<div class="status ok">Alle Fragen in dieser Auswahl sitzen.</div>`;
+ else h+=`<p>Runde fertig. Neue Runde starten, am besten in einer anderen Pause.</p><button class="primary" id="newround">Neue Runde starten</button>`;
+ h+=`<p><button id="reset">Quiz zurücksetzen</button></p>`;
+ const sk=Object.keys(S.struck);
+ if(sk.length){h+=`<label class="task"><input type="checkbox" id="showStruck" ${S.showStruck?'checked':''}> <span>Gestrichene anzeigen (${sk.length})</span></label>`;
+  if(S.showStruck)h+=sk.map(k=>`<div class="srow"><span>${esc(CARDS[+k][1])}</span><button data-unstrike="${k}">Zurückholen</button></div>`).join('')}
+ h+=`<h2>Sichern (Export / Import)</h2><p>Fortschritt, Notizen und gestrichene Fragen liegen im Browser dieses Geräts. Für Backup oder anderes Gerät: Exportieren, Text kopieren, dort einfügen und Importieren.</p>
+ <button class="primary" id="export">Exportieren</button> <button id="import">Importieren</button>${S.ioMsg?`<p>${esc(S.ioMsg)}</p>`:''}<textarea id="io" rows="5" placeholder="Backup-Text hier einfügen"></textarea>`;
+ h+=`<h2>Routen</h2>${ROUTES.map(r=>`<p><b>${esc(r.title)}</b><br>${esc(r.detail)}</p>`).join('')}<div class="tw"><table>${PROPS.map(p=>`<tr><td>${esc(p.label)}</td><td>${esc(p.value)}</td></tr>`).join('')}</table></div>`;
+ h+=`<h2>Widersprüche AFM vs. Checkliste</h2><p>${esc(CONTRA)}</p>`;
+ const io=$('#io')?$('#io').value:'';
+ $('#app').innerHTML=h;if($('#io'))$('#io').value=io;
+}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.day){S.day=b.dataset.day;render()}
+ else if(b.dataset.filter){S.filter=b.dataset.filter;startRound();render()}
+ else if(b.dataset.opt!==undefined)pick(+b.dataset.opt);
+ else if(b.dataset.unstrike!==undefined)unstrike(+b.dataset.unstrike);
+ else if(b.id==='show'){S.shown=true;render()}
+ else if(b.id==='next')next();
+ else if(b.id==='strike')strike(cur());
+ else if(b.id==='newround'){startRound();render()}
+ else if(b.id==='reset'){if(confirm('Fortschritt wirklich zurücksetzen?')){S.st={};S.cnt={};persist();startRound();render()}}
+ else if(b.id==='export'){const notizen_lesbar=Object.keys(S.notes).map(k=>({nr:+k,frage:CARDS[+k][1],notiz:S.notes[k]}));
+  const txt=JSON.stringify({v:1,datum:new Date().toISOString(),st:S.st,cnt:S.cnt,struck:S.struck,notes:S.notes,done:S.done,notizen_lesbar});
+  S.ioMsg='Backup steht unten. Komplett markieren und kopieren.';render();$('#io').value=txt;
+  try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download='checkride-backup.json';a.click()}catch(_){}}
+ else if(b.id==='import'){try{const d=JSON.parse($('#io').value);['st','cnt','struck','notes','done'].forEach(k=>{if(d[k])S[k]=d[k]});persist();S.ioMsg='Import erfolgreich.';startRound()}catch(_){S.ioMsg='Import fehlgeschlagen: Text ist kein gültiges Backup.'}render()}
+});
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.dataset.task){S.done[t.dataset.task]=t.checked;persist();render()}
+ else if(t.id==='oral'){S.oral=t.checked;save('cr_oral',S.oral);render()}
+ else if(t.id==='showStruck'){S.showStruck=t.checked;render()}});
+document.addEventListener('input',e=>{if(e.target.id==='note'){const c=cur(),v=e.target.value;if(v)S.notes[c]=v;else delete S.notes[c];persist();
+ const st=document.querySelector('.status');if(st){st.className='status '+(S.storageOk?'ok':'bad');st.textContent=S.storageOk?`Speichern: aktiv (zuletzt gespeichert ${S.lastSave})`:'Speichern nicht möglich in diesem Browser (z. B. privater Modus). Bitte per Export sichern.'}}});
+startRound();render();
+</script></body></html>
