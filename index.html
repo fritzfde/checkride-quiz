@@ -10,9 +10,9 @@ button.primary{background:#2563eb;color:#fff;border-color:#2563eb}.seg{display:f
 input[type=text],textarea{width:100%;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid #bbb;font:inherit;background:transparent;color:inherit;margin-top:4px}
 textarea{font-family:ui-monospace,monospace;font-size:.8rem}.tw{overflow-x:auto}table{border-collapse:collapse;font-size:.9rem}td,th{border-bottom:1px solid #ddd;padding:6px 8px;text-align:left}
 .status{padding:10px 12px;border-radius:8px;margin:8px 0}.status.ok{background:rgba(22,163,74,.12)}.status.bad{background:rgba(220,38,38,.15)}
-.srow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.srow span{flex:1 1 200px}</style></head>
+.srow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.srow span{flex:1 1 200px}.nav{display:flex;gap:12px;margin:14px 0}.nav button{flex:1;min-height:56px;font-size:1.15rem;font-weight:600;border-radius:12px}.nav button:disabled{opacity:.35}</style></head>
 <body><h1>Checkride Mo 26.10.</h1><p class="sub">Tagesplan zum Abhaken und Quiz bis alles sitzt. Prüfung: 13:00 Treffen Flugschule, 14–17 Uhr Flug mit F-GNNF, nur analog navigieren.</p>
-<div id="app"></div><div id="upd"></div><p class="sub" style="margin-top:2em;font-size:.8rem">Version 2026-10-24 01:03 · Bei alter Version: Seite neu laden.</p><script>const DAYS = [
+<div id="app"></div><div id="upd"></div><p class="sub" style="margin-top:2em;font-size:.8rem">Version 2026-10-24 01:04 · Bei alter Version: Seite neu laden.</p><script>const DAYS = [
   { key: "fr", label: "Fr 23.10.", note: "Arbeit 9–17: kleine Häppchen in Wartezeiten (GitHub, Kollegen). Abends Gym früher, wenig Gaming.", tasks: [
     { id: "fr1", t: "10 min · Quiz: Filter Robin, eine Runde" },
     { id: "fr2", t: "10 min · Quiz: Filter Robin, zweite Runde in einer anderen Pause" },
@@ -192,7 +192,7 @@ const CONTRA = 'AFM (Aircraft Flight Manual, Flughandbuch) und Schul-Checkliste 
 // Duplikate: standardmäßig ausgeblendet (Index bleibt erhalten)
 const DUP = {87: "Doppelt zu Karte 17 (Motorausfall nach dem Start)"};
 
-const VERSION="2026-10-24 01:03";
+const VERSION="2026-10-24 01:04";
 const REQ=3;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -208,13 +208,15 @@ const grp={robin:'R',allg:'A',nf:'N'};
 function pool(){return CARDS.map((_,i)=>i).filter(i=>!S.struck[i]&&!DUP[i]&&(S.filter==='alle'||CARDS[i][0]===grp[S.filter]))}
 const sc=i=>(S.st[i]&&S.st[i].s)||0;
 const cn=i=>S.cnt[i]||{n:0,r:0,w:0};
-function startRound(){S.queue=shuffle(pool().filter(i=>sc(i)<REQ));S.base=S.queue.length;S.pos=0;resetCard()}
-function resetCard(){S.picked=null;S.shown=false;const c=cur();S.options=c<0?[]:shuffle([CARDS[c][2],...CARDS[c][3]])}
+function startRound(){S.queue=shuffle(pool().filter(i=>sc(i)<REQ));S.base=S.queue.length;S.pos=0;S.hist={};resetCard()}
+function resetCard(){const H=S.hist&&S.hist[S.pos];if(H&&H.c===cur()){S.picked=H.picked;S.shown=H.shown;S.options=H.options;return}S.picked=null;S.shown=false;const c=cur();S.options=c<0?[]:shuffle([CARDS[c][2],...CARDS[c][3]])}
 const cur=()=>S.pos<S.queue.length?S.queue[S.pos]:-1;
 function pick(k){const c=cur();if(S.picked!==null||c<0)return;const o=S.options[k];S.picked=o;const ok=o===CARDS[c][2];
  S.st[c]={s:ok?sc(c)+1:0};const p=cn(c);S.cnt[c]={n:p.n+1,r:p.r+(ok?1:0),w:p.w+(ok?0:1)};
  if(!ok)S.queue.push(c);persist();render()}
-function next(){S.pos++;resetCard();render()}
+function keep(){if(!S.hist)S.hist={};if(cur()>=0)S.hist[S.pos]={c:cur(),picked:S.picked,shown:S.shown,options:S.options}}
+function next(){keep();S.pos++;resetCard();render()}
+function back(){if(S.pos<=0)return;keep();S.pos--;resetCard();render()}
 function strike(i){S.struck[i]=true;S.queue=S.queue.filter((x,k)=>k<S.pos||x!==i);persist();resetCard();render()}
 function unstrike(i){delete S.struck[i];persist();render()}
 function stat(ids){ids=ids.filter(i=>!DUP[i]);const act=ids.filter(i=>!S.struck[i]);let r=0,w=0;ids.forEach(i=>{r+=cn(i).r;w+=cn(i).w});
@@ -236,10 +238,11 @@ function render(){
  const c=cur();
  if(c>=0){const C=CARDS[c],s=Math.min(sc(c),REQ);
   h+=`<div class="card"><div class="h3">Frage ${S.pos+1} von ${S.queue.length}</div><div class="meta">Runde: ${S.base} offene Fragen${S.queue.length>S.base?` + ${S.queue.length-S.base} Wiederholung(en) nach falscher Antwort`:''}</div><div class="meta">${esc(C[5])} · Fortschritt ${'●'.repeat(s)+'○'.repeat(REQ-s)} · gesehen ${cn(c).n}×</div><p class="q">${esc(C[1])}</p>`;
+  if(S.hist&&S.hist[S.pos]&&S.hist[S.pos].picked!==null&&S.picked!==null)h+=`<div class="meta">Rückblick – schon beantwortet, zählt nicht erneut.</div>`;
   if(S.oral&&!S.shown&&S.picked===null)h+=`<button class="primary" id="show">Antworten zeigen</button>`;
   else h+=S.options.map((o,k)=>{let cl='opt';if(S.picked!==null&&o===C[2])cl+=' right';else if(S.picked===o)cl+=' wrong';return`<button class="${cl}" data-opt="${k}">${esc(o)}</button>`}).join('');
   if(S.picked!==null){const ok=S.picked===C[2];h+=`<p class="${ok?'okt':'badt'}"><b>${ok?'Richtig':'Falsch. Richtig: '+esc(C[2])}</b></p><p class="sub">${esc(C[4])}</p><button class="primary" id="next">Weiter</button>`}
-  h+=`<label class="lbl">Meine Notiz / Korrektur zu dieser Frage<input id="note" type="text" value="${esc(S.notes[c]||'')}" placeholder="z. B. Wert in der NF anders, Fluglehrer sagt …"></label><button id="strike">Frage streichen</button></div>`;
+  h+=`<div class="nav"><button id="back" ${S.pos>0?'':'disabled'}>← Zurück</button><button id="fwd">${S.picked===null?'Überspringen →':'Vor →'}</button></div><label class="lbl">Meine Notiz / Korrektur zu dieser Frage<input id="note" type="text" value="${esc(S.notes[c]||'')}" placeholder="z. B. Wert in der NF anders, Fluglehrer sagt …"></label><button id="strike">Frage streichen</button></div>`;
  }else if(mastered===P.length)h+=`<div class="status ok">Alle Fragen in dieser Auswahl sitzen.</div>`;
  else h+=`<p>Runde fertig. Neue Runde starten, am besten in einer anderen Pause.</p><button class="primary" id="newround">Neue Runde starten</button>`;
  h+=`<p><button id="reset">Quiz zurücksetzen</button></p>`;
@@ -259,7 +262,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  else if(b.dataset.opt!==undefined)pick(+b.dataset.opt);
  else if(b.dataset.unstrike!==undefined)unstrike(+b.dataset.unstrike);
  else if(b.id==='show'){S.shown=true;render()}
- else if(b.id==='next')next();
+ else if(b.id==='next'||b.id==='fwd')next();
+ else if(b.id==='back')back();
  else if(b.id==='strike')strike(cur());
  else if(b.id==='newround'){startRound();render()}
  else if(b.id==='reset'){if(confirm('Fortschritt wirklich zurücksetzen?')){S.st={};S.cnt={};persist();startRound();render()}}
