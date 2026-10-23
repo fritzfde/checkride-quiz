@@ -12,7 +12,7 @@ textarea{font-family:ui-monospace,monospace;font-size:.8rem}.tw{overflow-x:auto}
 .status{padding:10px 12px;border-radius:8px;margin:8px 0}.status.ok{background:rgba(22,163,74,.12)}.status.bad{background:rgba(220,38,38,.15)}
 .srow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.srow span{flex:1 1 200px}.nav{display:flex;gap:12px;margin:14px 0}.nav button{flex:1;min-height:56px;font-size:1.15rem;font-weight:600;border-radius:12px}.nav button:disabled{opacity:.35}</style></head>
 <body><h1>Checkride Mo 26.10.</h1><p class="sub">Tagesplan zum Abhaken und Quiz bis alles sitzt. Prüfung: 13:00 Treffen Flugschule, 14–17 Uhr Flug mit F-GNNF, nur analog navigieren.</p>
-<div id="app"></div><div id="upd"></div><p class="sub" style="margin-top:2em;font-size:.8rem">Version 2026-10-24 01:32 · Bei alter Version: Seite neu laden.</p><script>const DAYS = [
+<div id="app"></div><div id="upd"></div><p class="sub" style="margin-top:2em;font-size:.8rem">Version 2026-10-24 01:33 · Bei alter Version: Seite neu laden.</p><script>const DAYS = [
   { key: "fr", label: "Fr 23.10.", note: "Arbeit 9–17: kleine Häppchen in Wartezeiten (GitHub, Kollegen). Abends Gym früher, wenig Gaming.", tasks: [
     { id: "fr1", t: "10 min · Quiz: Filter Robin, eine Runde" },
     { id: "fr2", t: "10 min · Quiz: Filter Robin, zweite Runde in einer anderen Pause" },
@@ -212,7 +212,7 @@ const DUP={77:"Ausgeblendet auf Wunsch (Quelle nur eigene Angabe)",87: "Doppelt 
 
 const FIG={86:"<svg viewBox=\"0 0 320 170\" width=\"100%\" style=\"max-width:420px;display:block;margin:8px auto\" fill=\"none\" stroke=\"currentColor\" font-family=\"sans-serif\"><g transform=\"translate(85,85)\"><circle r=\"75\" stroke-width=\"3\"/><circle r=\"62\" stroke-width=\"1\" opacity=\".5\"/><line x1=\"0.0\" y1=\"-62.0\" x2=\"0.0\" y2=\"-70.0\" stroke-width=\"2\"/><line x1=\"10.8\" y1=\"-61.1\" x2=\"13.0\" y2=\"-73.9\" stroke-width=\"1\"/><line x1=\"21.2\" y1=\"-58.3\" x2=\"25.7\" y2=\"-70.5\" stroke-width=\"1\"/><line x1=\"31.0\" y1=\"-53.7\" x2=\"35.0\" y2=\"-60.6\" stroke-width=\"2\"/><line x1=\"39.9\" y1=\"-47.5\" x2=\"48.2\" y2=\"-57.5\" stroke-width=\"1\"/><line x1=\"47.5\" y1=\"-39.9\" x2=\"57.5\" y2=\"-48.2\" stroke-width=\"1\"/><line x1=\"53.7\" y1=\"-31.0\" x2=\"60.6\" y2=\"-35.0\" stroke-width=\"2\"/><line x1=\"58.3\" y1=\"-21.2\" x2=\"70.5\" y2=\"-25.7\" stroke-width=\"1\"/><line x1=\"61.1\" y1=\"-10.8\" x2=\"73.9\" y2=\"-13.0\" stroke-width=\"1\"/><line x1=\"62.0\" y1=\"-0.0\" x2=\"70.0\" y2=\"-0.0\" stroke-width=\"2\"/><line x1=\"61.1\" y1=\"10.8\" x2=\"73.9\" y2=\"13.0\" stroke-width=\"1\"/><line x1=\"58.3\" y1=\"21.2\" x2=\"70.5\" y2=\"25.7\" stroke-width=\"1\"/><line x1=\"53.7\" y1=\"31.0\" x2=\"60.6\" y2=\"35.0\" stroke-width=\"2\"/><line x1=\"47.5\" y1=\"39.9\" x2=\"57.5\" y2=\"48.2\" stroke-width=\"1\"/><line x1=\"39.9\" y1=\"47.5\" x2=\"48.2\" y2=\"57.5\" stroke-width=\"1\"/><line x1=\"31.0\" y1=\"53.7\" x2=\"35.0\" y2=\"60.6\" stroke-width=\"2\"/><line x1=\"21.2\" y1=\"58.3\" x2=\"25.7\" y2=\"70.5\" stroke-width=\"1\"/><line x1=\"10.8\" y1=\"61.1\" x2=\"13.0\" y2=\"73.9\" stroke-width=\"1\"/><line x1=\"0.0\" y1=\"62.0\" x2=\"0.0\" y2=\"70.0\" stroke-width=\"2\"/><line x1=\"-10.8\" y1=\"61.1\" x2=\"-13.0\" y2=\"73.9\" stroke-width=\"1\"/><line x1=\"-21.2\" y1=\"58.3\" x2=\"-25.7\" y2=\"70.5\" stroke-width=\"1\"/><line x1=\"-31.0\" y1=\"53.7\" x2=\"-35.0\" y2=\"60.6\" stroke-width=\"2\"/><line x1=\"-39.9\" y1=\"47.5\" x2=\"-48.2\" y2=\"57.5\" stroke-width=\"1\"/><line x1=\"-47.5\" y1=\"39.9\" x2=\"-57.5\" y2=\"48.2\" stroke-width=\"1\"/><line x1=\"-53.7\" y1=\"31.0\" x2=\"-60.6\" y2=\"35.0\" stroke-width=\"2\"/><line x1=\"-58.3\" y1=\"21.2\" x2=\"-70.5\" y2=\"25.7\" stroke-width=\"1\"/><line x1=\"-61.1\" y1=\"10.8\" x2=\"-73.9\" y2=\"13.0\" stroke-width=\"1\"/><line x1=\"-62.0\" y1=\"0.0\" x2=\"-70.0\" y2=\"0.0\" stroke-width=\"2\"/><line x1=\"-61.1\" y1=\"-10.8\" x2=\"-73.9\" y2=\"-13.0\" stroke-width=\"1\"/><line x1=\"-58.3\" y1=\"-21.2\" x2=\"-70.5\" y2=\"-25.7\" stroke-width=\"1\"/><line x1=\"-53.7\" y1=\"-31.0\" x2=\"-60.6\" y2=\"-35.0\" stroke-width=\"2\"/><line x1=\"-47.5\" y1=\"-39.9\" x2=\"-57.5\" y2=\"-48.2\" stroke-width=\"1\"/><line x1=\"-39.9\" y1=\"-47.5\" x2=\"-48.2\" y2=\"-57.5\" stroke-width=\"1\"/><line x1=\"-31.0\" y1=\"-53.7\" x2=\"-35.0\" y2=\"-60.6\" stroke-width=\"2\"/><line x1=\"-21.2\" y1=\"-58.3\" x2=\"-25.7\" y2=\"-70.5\" stroke-width=\"1\"/><line x1=\"-10.8\" y1=\"-61.1\" x2=\"-13.0\" y2=\"-73.9\" stroke-width=\"1\"/><path d=\"M0,-80 l-7,-9 h14z\" fill=\"currentColor\"/><text x=\"0\" y=\"-44\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"700\" fill=\"currentColor\" stroke=\"none\">090</text><text x=\"0\" y=\"66\" text-anchor=\"middle\" font-size=\"10\" fill=\"currentColor\" stroke=\"none\">270</text><circle cx=\"-56\" cy=\"0\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"-42\" cy=\"0\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"-28\" cy=\"0\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"-14\" cy=\"0\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"14\" cy=\"0\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"28\" cy=\"0\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"42\" cy=\"0\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"56\" cy=\"0\" r=\"3.5\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"0\" cy=\"0\" r=\"6\" stroke-width=\"2\"/><line x1=\"28\" y1=\"-48\" x2=\"28\" y2=\"48\" stroke=\"#e8a000\" stroke-width=\"5\" stroke-linecap=\"round\"/><path d=\"M-34,-32 l9,-12 l9,12z\" fill=\"#2a9d3a\" stroke=\"none\"/><text x=\"-25\" y=\"-14\" text-anchor=\"middle\" font-size=\"12\" font-weight=\"700\" fill=\"currentColor\" stroke=\"none\">TO</text><text x=\"0\" y=\"95\" text-anchor=\"middle\" font-size=\"11\" fill=\"currentColor\" stroke=\"none\">Nadel 2 Punkte rechts</text></g><g transform=\"translate(180,20)\"><text x=\"0\" y=\"0\" font-size=\"11\" fill=\"currentColor\" stroke=\"none\">Von oben (Norden oben)</text><line x1=\"0\" y1=\"95\" x2=\"125\" y2=\"95\" stroke-dasharray=\"6 4\" stroke-width=\"2\"/><text x=\"0\" y=\"112\" font-size=\"10\" fill=\"currentColor\" stroke=\"none\">Kurs 090 zur Station</text><circle cx=\"130\" cy=\"95\" r=\"6\" fill=\"currentColor\"/><text x=\"104\" y=\"84\" font-size=\"10\" fill=\"currentColor\" stroke=\"none\">VOR</text><path d=\"M30,45 h26 m-8,-6 l8,6 l-8,6\" stroke-width=\"3\"/><text x=\"16\" y=\"36\" font-size=\"10\" fill=\"currentColor\" stroke=\"none\">du, Kurs 090</text><path d=\"M44,56 v26 m-6,-8 l6,8 l6,-8\" stroke=\"#e8a000\" stroke-width=\"2\"/><text x=\"52\" y=\"74\" font-size=\"10\" fill=\"#e8a000\" stroke=\"none\">rechts</text></g></svg>"};
 
-const VERSION="2026-10-24 01:32";
+const VERSION="2026-10-24 01:33";
 const REQ=3;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -226,25 +226,26 @@ function persist(){const ok=[save('cr_st',S.st),save('cr_cnt',S.cnt),save('cr_st
  S.storageOk=ok;S.lastSave=ok?new Date().toLocaleTimeString('de-DE'):''}
 const grp={robin:'R',allg:'A',nf:'N',pk:'P'};
 const KERN=[105,106,115,116,119,17,18,19,20,22,27,62,63,2,3,5,6,7,8,9,1,14,43,44,45,53,56,51,90,91];
-const need=i=>cn(i).w>0?2:1;
+const need=i=>(cn(i).w>0||cn(i).g>0)?2:1;
 const mast=i=>!!(S.st[i]&&S.st[i].m);
 if(!load('cr_mig2',false)){Object.keys(S.st).forEach(k=>{const c=S.cnt[k]||{r:0,w:0};if((S.st[k].s||0)>=2||(c.w===0&&c.r>=1))S.st[k].m=true});save('cr_st',S.st);save('cr_mig2',true)}
 function pool(){return CARDS.map((_,i)=>i).filter(i=>!S.struck[i]&&!DUP[i]&&(S.filter==='alle'||(S.filter==='kern'?KERN.includes(i):CARDS[i][0]===grp[S.filter])))}
 const sc=i=>(S.st[i]&&S.st[i].s)||0;
-const cn=i=>S.cnt[i]||{n:0,r:0,w:0};
+const cn=i=>Object.assign({n:0,r:0,w:0,g:0},S.cnt[i]||{});
 function startRound(){S.queue=shuffle(pool().filter(i=>!mast(i)));S.base=S.queue.length;S.pos=0;S.hist={};resetCard()}
-function resetCard(){const H=S.hist&&S.hist[S.pos];if(H&&H.c===cur()){S.picked=H.picked;S.shown=H.shown;S.options=H.options;return}S.picked=null;S.shown=false;const c=cur();S.options=c<0?[]:shuffle([CARDS[c][2],...CARDS[c][3]])}
+function resetCard(){S.guessed=false;const H=S.hist&&S.hist[S.pos];if(H&&H.c===cur()){S.picked=H.picked;S.shown=H.shown;S.options=H.options;return}S.picked=null;S.shown=false;const c=cur();S.options=c<0?[]:shuffle([CARDS[c][2],...CARDS[c][3]])}
 const cur=()=>S.pos<S.queue.length?S.queue[S.pos]:-1;
 function pick(k){const c=cur();if(S.picked!==null||c<0)return;const o=S.options[k];S.picked=o;const ok=o===CARDS[c][2];
- const p=cn(c),ns=ok?sc(c)+1:0;S.st[c]={s:ns,m:ok&&(mast(c)||(p.n===0)||ns>=2)};S.cnt[c]={n:p.n+1,r:p.r+(ok?1:0),w:p.w+(ok?0:1)};
+ const p=cn(c),ns=ok?sc(c)+1:0;S.st[c]={s:ns,m:ok&&(mast(c)||(p.n===0)||ns>=2)};S.cnt[c]={n:p.n+1,r:p.r+(ok?1:0),w:p.w+(ok?0:1),g:p.g};S.guessed=false;
  if(!ok)S.queue.push(c);persist();render()}
+function guess(){const c=cur();if(c<0||S.guessed||S.picked!==CARDS[c][2])return;const p=cn(c);S.cnt[c]=Object.assign(p,{r:p.r-1,g:p.g+1});S.st[c]={s:0,m:false};S.guessed=true;S.queue.push(c);persist();render()}
 function keep(){if(!S.hist)S.hist={};if(cur()>=0)S.hist[S.pos]={c:cur(),picked:S.picked,shown:S.shown,options:S.options}}
 function next(){keep();S.pos++;resetCard();render()}
 function back(){if(S.pos<=0)return;keep();S.pos--;resetCard();render()}
 function strike(i){S.struck[i]=true;S.queue=S.queue.filter((x,k)=>k<S.pos||x!==i);persist();resetCard();render()}
 function unstrike(i){delete S.struck[i];persist();render()}
-function stat(ids){ids=ids.filter(i=>!DUP[i]);const act=ids.filter(i=>!S.struck[i]);let r=0,w=0;ids.forEach(i=>{r+=cn(i).r;w+=cn(i).w});
- return{act:act.length,str:ids.length-act.length,seen:ids.filter(i=>cn(i).n>0).length,n:r+w,r,w,pct:r+w?Math.round(r/(r+w)*100):0,lern:act.filter(mast).length}}
+function stat(ids){ids=ids.filter(i=>!DUP[i]);const act=ids.filter(i=>!S.struck[i]);let r=0,w=0,g=0;ids.forEach(i=>{r+=cn(i).r;w+=cn(i).w;g+=cn(i).g});
+ return{act:act.length,str:ids.length-act.length,seen:ids.filter(i=>cn(i).n>0).length,n:r+w+g,r,w,g,pct:r+w+g?Math.round(r/(r+w+g)*100):0,lern:act.filter(mast).length}}
 function render(){
  const d=DAYS.find(x=>x.key===S.day);const dd=d.tasks.filter(t=>S.done[t.id]).length;
  let h='';
@@ -252,9 +253,9 @@ function render(){
  h+=`<h2>Tagesplan</h2><div class="seg">${DAYS.map(x=>`<button class="${x.key===S.day?'on':''}" data-day="${x.key}">${esc(x.label)}</button>`).join('')}</div>
  <p>${esc(d.note)} Erledigt: ${dd} von ${d.tasks.length}.</p>${d.tasks.map(t=>`<label class="task"><input type="checkbox" data-task="${t.id}" ${S.done[t.id]?'checked':''}> <span>${esc(t.t)}</span></label>`).join('')}`;
  const all=CARDS.map((_,i)=>i),t=stat(all),cat=g=>stat(all.filter(i=>CARDS[i][0]===g));
- const row=(n,s)=>`<tr><td>${n}</td><td>${s.act}</td><td>${s.str}</td><td>${s.seen}</td><td>${s.n}</td><td>${s.r}</td><td>${s.w}</td><td>${s.n?s.pct+' %':'–'}</td><td>${s.lern}</td></tr>`;
- h+=`<h2>Quiz</h2><p>Übersicht: ${t.act} aktive Fragen, ${t.str} gestrichen. Mindestens einmal gesehen: ${t.seen}. Antworten: ${t.n}, davon richtig ${t.r} und falsch ${t.w}${t.n?` (${t.pct} % richtig)`:''}. Gelernt: ${t.lern}.</p>
- <div class="tw"><table><tr><th>Kategorie</th><th>Aktiv</th><th>Gestr.</th><th>Gesehen</th><th>Antw.</th><th>Richtig</th><th>Falsch</th><th>%</th><th>Gelernt</th></tr>${row('Robin',cat('R'))}${row('Allgemein',cat('A'))}${row('F-GNNF',cat('N'))+row('Prüfungskriterien',cat('P'))}</table></div>`;
+ const row=(n,s)=>`<tr><td>${n}</td><td>${s.act}</td><td>${s.str}</td><td>${s.seen}</td><td>${s.n}</td><td>${s.r}</td><td>${s.w}</td><td>${s.g}</td><td>${s.n?s.pct+' %':'–'}</td><td>${s.lern}</td></tr>`;
+ h+=`<h2>Quiz</h2><p>Übersicht: ${t.act} aktive Fragen, ${t.str} gestrichen. Mindestens einmal gesehen: ${t.seen}. Antworten: ${t.n}, davon richtig ${t.r}, falsch ${t.w} und geraten ${t.g}${t.n?` (${t.pct} % richtig)`:''}. Gelernt: ${t.lern}.</p>
+ <div class="tw"><table><tr><th>Kategorie</th><th>Aktiv</th><th>Gestr.</th><th>Gesehen</th><th>Antw.</th><th>Richtig</th><th>Falsch</th><th>Geraten</th><th>%</th><th>Gelernt</th></tr>${row('Robin',cat('R'))}${row('Allgemein',cat('A'))}${row('F-GNNF',cat('N'))+row('Prüfungskriterien',cat('P'))}</table></div>`;
  const P=pool(),mastered=P.filter(mast).length,KA=KERN.filter(i=>!S.struck[i]&&!DUP[i]),km=KA.filter(mast).length;
  h+=`<div class="seg">${[['kern','Kern'],['alle','Alle'],['robin','Robin'],['allg','Allgemein'],['nf','F-GNNF & Prüferfragen'],['pk','Prüfungskriterien']].map(([v,l])=>`<button class="${v===S.filter?'on':''}" data-filter="${v}">${l}</button>`).join('')}</div>
  <label class="task"><input type="checkbox" id="oral" ${S.oral?'checked':''}> <span>Erst laut antworten (wie in der mündlichen Prüfung)</span></label>
@@ -266,7 +267,7 @@ function render(){
   if(S.hist&&S.hist[S.pos]&&S.hist[S.pos].picked!==null&&S.picked!==null)h+=`<div class="meta">Rückblick – schon beantwortet, zählt nicht erneut.</div>`;
   if(S.oral&&!S.shown&&S.picked===null)h+=`<button class="primary" id="show">Antworten zeigen</button>`;
   else h+=S.options.map((o,k)=>{let cl='opt';if(S.picked!==null&&o===C[2])cl+=' right';else if(S.picked===o)cl+=' wrong';return`<button class="${cl}" data-opt="${k}">${esc(o)}</button>`}).join('');
-  if(S.picked!==null){const ok=S.picked===C[2];h+=`<p class="${ok?'okt':'badt'}"><b>${ok?'Richtig':'Falsch. Richtig: '+esc(C[2])}</b></p><p class="sub">${esc(C[4])}</p><button class="primary" id="next">Weiter</button>`}
+  if(S.picked!==null){const ok=S.picked===C[2];h+=`<p class="${ok?'okt':'badt'}"><b>${ok?'Richtig':'Falsch. Richtig: '+esc(C[2])}</b></p><p class="sub">${esc(C[4])}</p>${ok&&!S.guessed&&!(S.hist&&S.hist[S.pos]&&S.hist[S.pos].picked!==null)?'<button id="guess">War geraten</button> ':ok&&S.guessed?'<p class="meta">Als geraten markiert: jetzt 2× nacheinander richtig nötig.</p>':''}<button class="primary" id="next">Weiter</button>`}
   h+=`<div class="nav"><button id="back" ${S.pos>0?'':'disabled'}>← Zurück</button><button id="fwd">${S.picked===null?'Überspringen →':'Vor →'}</button></div><label class="lbl">Meine Notiz / Korrektur zu dieser Frage<input id="note" type="text" value="${esc(S.notes[c]||'')}" placeholder="z. B. Wert in der NF anders, Fluglehrer sagt …"></label><button id="strike">Frage streichen</button></div>`;
  }else if(mastered===P.length)h+=`<div class="status ok">Alle Fragen in dieser Auswahl sitzen.</div>`;
  else h+=`<p>Runde fertig. Neue Runde starten, am besten in einer anderen Pause.</p><button class="primary" id="newround">Neue Runde starten</button>`;
@@ -289,6 +290,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
  else if(b.id==='show'){S.shown=true;render()}
  else if(b.id==='next'||b.id==='fwd')next();
  else if(b.id==='back')back();
+ else if(b.id==='guess')guess();
  else if(b.id==='strike')strike(cur());
  else if(b.id==='newround'){startRound();render()}
  else if(b.id==='reset'){if(confirm('Fortschritt wirklich zurücksetzen?')){S.st={};S.cnt={};persist();startRound();render()}}
